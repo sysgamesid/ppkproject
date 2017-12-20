@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<script src="jscript.js"></script>
+
+<body>
+
+<p>Lowokwaru</p>
+
+<img src="kedungkandang.png" width="330" height="357" alt="Kedungkandang" > </br>
+<button type="button" name="button" onclick=tampilData()>Tampilkan Data Toko Buku</button>
+
+
+<p id="demo"></p>
+
+<script>
+function tampilData(){
+var obj, dbParam, xmlhttp, myObj, x, txt = "";
+obj = { "nama":"tokoBuku", "limit":20 };
+dbParam = JSON.stringify(obj);
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        //txt += "<table border='1'>"
+        for (x in myObj) {
+            txt += "Nama Toko :" + myObj[x].nama + " Alamat :" + myObj[x].alamat + " Jam Buka :" + myObj[x].jamBuka +" Rating :" + myObj[x].rating +"</br>"
+            //txt += "<tr><td>" + myObj[x].nama  +"</td>" + "<td>" + myObj[x].alamat  +"</td></tr>";
+        }
+        //txt += "</table>"
+        document.getElementById("demo").innerHTML = txt;
+    }
+};
+xmlhttp.open("GET", "json/data.php", true);
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send("x=" + dbParam);
+};
+</script>
+<a href="javascript:history.back()"><input class="btn" type="submit" name="submit" value="Kembali" ></a>
+</body>
+</html>
